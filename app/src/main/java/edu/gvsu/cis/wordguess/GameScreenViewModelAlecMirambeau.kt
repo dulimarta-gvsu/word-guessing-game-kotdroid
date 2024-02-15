@@ -2,8 +2,6 @@ package edu.gvsu.cis.wordguess
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.LiveData
-import android.util.Log
 
 class GameScreenViewModel: ViewModel() {
     private val _model = Model()
@@ -16,7 +14,6 @@ class GameScreenViewModel: ViewModel() {
      init {
          pickRandomWord()
          println("In init output shuffled word: $shuffledWord, actual word: ${currentWord.value}")
-
      }
 
     val currentWord: MutableLiveData<String> get() = _currentWord

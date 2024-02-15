@@ -1,6 +1,5 @@
 package edu.gvsu.cis.wordguess
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 class Model {

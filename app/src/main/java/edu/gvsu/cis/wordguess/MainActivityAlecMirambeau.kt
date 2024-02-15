@@ -7,11 +7,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.textfield.TextInputEditText
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
