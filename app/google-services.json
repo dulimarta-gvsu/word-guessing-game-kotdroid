@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "583175857793",
+    "project_id": "firstfirebasedemo-c34cb",
+    "storage_bucket": "firstfirebasedemo-c34cb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:583175857793:android:03e11bdbd897cc89174f80",
+        "android_client_info": {
+          "package_name": "edu.gvsu.cis.wordguess"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD977y8Y2tZrPvqOdyTFQ6QFAb3wTVXEBE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
