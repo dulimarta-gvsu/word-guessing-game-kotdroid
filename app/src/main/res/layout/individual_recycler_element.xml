@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardRowGuess"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_margin="2dp"
+    app:cardBackgroundColor="#F67979"
+    app:cardCornerRadius="4dp">
+
+
+    <!--
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:orientation="horizontal"
+        android:paddingBottom="4dp">
+-->
+
+
+    <TextView
+        android:id="@+id/rvWordScrambled"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="0dp"
+        android:text="Scrambled Word"
+        android:textSize="25sp" />
+    <!--    </LinearLayout>-->
+
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="60dp"-->
+    <!--        android:orientation="vertical">-->
+
+    <TextView
+        android:id="@+id/timeToGuessWord"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="30dp"
+        android:text="XX Seconds"
+        android:textSize="15sp" />
+
+    <ImageView
+        android:id="@+id/imageSuccessOrFail"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
+
+    <!--    </LinearLayout>-->
+
+
+</androidx.cardview.widget.CardView>
+
+
