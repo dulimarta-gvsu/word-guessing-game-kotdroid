@@ -87,7 +87,9 @@ class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
         /** if the minimum or maximum word size changes we should change the current word to match this
          */
 
-        /** observe only used to update UI, listen to changes in viewmodel to update UI
+        /** TECH DEBT: FIX OBSERVERS BELOW SO observe is only used to update UI,
+         * only want to observe/listen to changes in viewmodel to update UI.
+         * Current implementation messes it up.
          */
         myViewModel.minWordLength.observe(this){
             myViewModel.pickRandomWord()
