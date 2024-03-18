@@ -89,13 +89,13 @@ class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
 
         /** observe only used to update UI, listen to changes in viewmodel to update UI
          */
-//        myViewModel.minWordLength.observe(this){
-//            myViewModel.pickRandomWord()
-//        }
-//
-//        myViewModel.maxWordLength.observe(this){
-//            myViewModel.pickRandomWord()
-//        }
+        myViewModel.minWordLength.observe(this){
+            myViewModel.pickRandomWord()
+        }
+
+        myViewModel.maxWordLength.observe(this){
+            myViewModel.pickRandomWord()
+        }
 
 
         // if we are changing the word, we should be changing the scrambled word that's displayed

@@ -1,4 +1,5 @@
 package edu.gvsu.cis.wordguess
 
-class wordResponse {
-}
+data class wordResponse(
+    var word: String
+)

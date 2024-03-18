@@ -1,8 +1,18 @@
 package edu.gvsu.cis.wordguess
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlin.time.TimeSource
+
+// Coroutine imports
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
+// Retrofit2 imports
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
@@ -31,8 +41,15 @@ class GameScreenViewModel: ViewModel() {
     var minWordLength = MutableLiveData<Int>(3)
     var maxWordLength = MutableLiveData<Int>(6)
     var sumSecondsToGuess: Long = 0
+
+    // API Related variables
+    val apiEndpoint: WordAPI
+    var listOfWord: MutableList<String> = mutableListOf()
      init {
          println(" Picking a random word")
+         apiEndpoint = wordClient.getInstance().create(WordAPI::class.java)
+//         genWords(10, maxWordLength.value)
+
          pickRandomWord()
      }
     val currentWord: MutableLiveData<String> get() = _currentWord
@@ -40,8 +57,20 @@ class GameScreenViewModel: ViewModel() {
     val model: Model get() = _model
 
 
+    fun genWords(numWords: Int, maxWordLength: Int?): Unit{
+        if (maxWordLength != null){
+        viewModelScope.launch(Dispatchers.IO) {
+            var rNames = apiEndpoint.getMultipleWords(numWords, maxWordLength)
+            rNames.body().let{
+                Log.d("Values Returned from API: ", "$it")
+            }
+
+            }
+        }
+    }
 //Updates the current word with a randomly picked word from our mutable list of words.
     fun pickRandomWord(){
+//        var new_word: String = listOfWord.random()
         var new_word: String = model.allWords.random()
     // Continue to call random word until we get a word that is different than our
     // current word
@@ -78,9 +107,8 @@ class GameScreenViewModel: ViewModel() {
 
 }
 
-// API to be used: https://random-word-api.herokuapp.com/word
-interface WordAPI{
-    @GET("")
-    suspend fun getWord(@Query(""))
-}
+/** API Stuff Below
+
+ */
+
 
