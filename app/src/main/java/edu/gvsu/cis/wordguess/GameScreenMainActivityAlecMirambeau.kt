@@ -86,13 +86,16 @@ class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
         // Set up our observers
         /** if the minimum or maximum word size changes we should change the current word to match this
          */
-        myViewModel.minWordLength.observe(this){
-            myViewModel.pickRandomWord()
-        }
 
-        myViewModel.maxWordLength.observe(this){
-            myViewModel.pickRandomWord()
-        }
+        /** observe only used to update UI, listen to changes in viewmodel to update UI
+         */
+//        myViewModel.minWordLength.observe(this){
+//            myViewModel.pickRandomWord()
+//        }
+//
+//        myViewModel.maxWordLength.observe(this){
+//            myViewModel.pickRandomWord()
+//        }
 
 
         // if we are changing the word, we should be changing the scrambled word that's displayed
@@ -148,6 +151,9 @@ class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
 
             //if users guess is correct, increment the current score.
             if (guessCorrect) {
+                /**
+                 * once we know the boolean value within the viewmodel just have the game logic there, and same idea for if the guess is false.
+                 */
                 myViewModel.endTime = myViewModel.timeSource.markNow()
                 val elapsedTime: Duration = myViewModel.endTime - myViewModel.startTime
                 var elapsedTimeSeconds = elapsedTime.toLong(DurationUnit.SECONDS)

@@ -3,6 +3,16 @@ package edu.gvsu.cis.wordguess
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlin.time.TimeSource
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Headers
+import retrofit2.http.Path
+import retrofit2.http.Query
+
 
 class GameScreenViewModel: ViewModel() {
     private val _model = Model()
@@ -22,7 +32,7 @@ class GameScreenViewModel: ViewModel() {
     var maxWordLength = MutableLiveData<Int>(6)
     var sumSecondsToGuess: Long = 0
      init {
-         println(" PIcking a random word")
+         println(" Picking a random word")
          pickRandomWord()
      }
     val currentWord: MutableLiveData<String> get() = _currentWord
@@ -66,6 +76,11 @@ class GameScreenViewModel: ViewModel() {
         snackMssg = message
     }
 
-
-
 }
+
+// API to be used: https://random-word-api.herokuapp.com/word
+interface WordAPI{
+    @GET("")
+    suspend fun getWord(@Query(""))
+}
+
