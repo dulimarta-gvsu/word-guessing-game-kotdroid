@@ -17,12 +17,11 @@ import retrofit2.http.Query
 val logInterceptor = HttpLoggingInterceptor()
 interface WordAPI{
     @GET("word")
-    suspend fun getWord(): Array<String>
+    suspend fun getWord(): List<String>
    // https://random-word-api.herokuapp.com/word?number=10&length=7
-    @GET("word?number={numberWords}&length={maxWordlength}")
-    suspend fun getMultipleWords(@Path("numberWords") numWords: Int,
-                                 @Path("maxWordLength") maxLength: Int): Response<List<String>>
-
+    @GET("word")
+    suspend fun getMultipleWords(@Query("number") numWords: Int,
+                                 @Query("length") maxLength: Int): Response<List<String>>
 }
 
 object wordClient{

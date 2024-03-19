@@ -33,11 +33,17 @@ class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
                 if (minWordLength != null) {
                     if (minWordLength != myViewModel.minWordLength.value) {
                         myViewModel.minWordLength.value = minWordLength
+                        /** if the minimum word size changes we should change the current word to match this
+                         */
+                        myViewModel.pickRandomWord()
                     }
                 }
                 if (maxWordLength != null) {
                     if (maxWordLength != myViewModel.maxWordLength.value) {
                         myViewModel.maxWordLength.value = maxWordLength
+                        /** if the maximum word size changes we should change the current word to match this
+                         */
+                        myViewModel.pickRandomWord()
                     }
                 }
 
@@ -84,21 +90,6 @@ class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
 
 
         // Set up our observers
-        /** if the minimum or maximum word size changes we should change the current word to match this
-         */
-
-        /** TECH DEBT: FIX OBSERVERS BELOW SO observe is only used to update UI,
-         * only want to observe/listen to changes in viewmodel to update UI.
-         * Current implementation messes it up.
-         */
-        myViewModel.minWordLength.observe(this){
-            myViewModel.pickRandomWord()
-        }
-
-        myViewModel.maxWordLength.observe(this){
-            myViewModel.pickRandomWord()
-        }
-
 
         // if we are changing the word, we should be changing the scrambled word that's displayed
         myViewModel.shuffledWord.observe(this, Observer {
