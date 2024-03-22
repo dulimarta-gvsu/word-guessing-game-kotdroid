@@ -51,6 +51,10 @@ class loginScreenActivity: AppCompatActivity() {
         }
 
 
+        /**
+         * Still need to implement the to Game button and launcher
+         */
+
     }
 
 }
