@@ -21,6 +21,9 @@
         <activity android:name=".loginScreenActivity"
             android:exported="false"
             />
+        <activity android:name=".signUpScreenActivity"
+            android:exported="false"
+            />
         <activity android:name=".statisticsActivity"
             android:exported="false"
             />

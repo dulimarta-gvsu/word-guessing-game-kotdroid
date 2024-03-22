@@ -32,18 +32,4 @@ class loginScreenViewModel: ViewModel() {
         }
     }
 
-    fun createNewAccount(email:String, password: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            auth.createUserWithEmailAndPassword(email, password)
-                .addOnSuccessListener {
-                    _logInSucc.postValue(it.user?.uid)
-                }
-                .addOnFailureListener {
-                    _snackMsg.postValue(it.message)
-                }
-        }
-    }
-
-
-
 }
