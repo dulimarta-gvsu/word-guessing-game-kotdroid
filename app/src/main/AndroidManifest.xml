@@ -18,9 +18,16 @@
             android:name=".settingsScreenActivity"
             android:exported="false"
             />
+
         <activity android:name=".loginScreenActivity"
-            android:exported="false"
-            />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".signUpScreenActivity"
             android:exported="false"
             />
@@ -29,12 +36,7 @@
             />
         <activity
             android:name=".GameScreenMainActivityAlecMirambeau"
-            android:exported="true">
-        <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="false">
         </activity>
     </application>
 

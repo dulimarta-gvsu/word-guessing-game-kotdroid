@@ -1,5 +1,6 @@
 package edu.gvsu.cis.wordguess
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -30,6 +31,12 @@ class loginScreenActivity: AppCompatActivity() {
                 vm.doLogin(emailTB.text.toString(), passwordTB.text.toString())
 
             }
+        }
+
+        /** Lets implement the Sign Up screen button launcher */
+        signUpButton.setOnClickListener{
+            val toSignUp = Intent(this, signUpScreenActivity::class.java)
+            startActivity(toSignUp)
         }
 
 
