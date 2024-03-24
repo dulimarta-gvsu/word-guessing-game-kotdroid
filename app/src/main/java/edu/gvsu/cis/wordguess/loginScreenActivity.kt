@@ -15,7 +15,6 @@ class loginScreenActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_screen)
-        println("made it this far")
 
         val inputMM = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
 
@@ -47,14 +46,19 @@ class loginScreenActivity: AppCompatActivity() {
         vm.snackMsg.observe(this) {
             it?.let {
                 if (it.length > 0)
-                    Snackbar.make(emailTB, "Unable to login $it", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(emailTB, it, Snackbar.LENGTH_LONG).show()
             }
         }
 
 
-        /**
-         * Still need to implement the to Game button and launcher
-         */
+        vm.logInSucc.observe(this){
+            it?.let{
+                if(it) {
+                    val toGame = Intent(this, GameScreenMainActivityAlecMirambeau::class.java)
+                    toGame.putExtra("userIDValue", vm.userID.value)
+                }
+            }
+        }
 
 
     }

@@ -51,11 +51,11 @@ class signUpScreenViewModel: ViewModel() {
                     .add(newUser)
                 .addOnSuccessListener {
                     Log.d("Firebase", "Successfully added user")
-                    _signUpSucess.value = true
                     // get and assign the User ID value provided by firebase
                     _userID.postValue(currentUser.uid)
                     _snackMsg.postValue("Successfully signed up!")
-            }
+                    _signUpSucess.value = true
+                }
                 .addOnFailureListener {
                     Log.d("Firebase", "failed to add user")
                     _snackMsg.postValue("unable to login ${it.message}")

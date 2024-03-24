@@ -31,6 +31,7 @@ class signUpScreenActivity: AppCompatActivity() {
         // Setup On Click Listeners
 
         createBttn.setOnClickListener{
+            inputMM.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
             if (passwordConfirmTB.text.toString() == passwordInitialTB.text.toString()) {
                 vm.createNewAccount(emailTB.text.toString(), passwordConfirmTB.text.toString(), userNameTB.text.toString())
             } else{

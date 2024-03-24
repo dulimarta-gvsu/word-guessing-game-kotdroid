@@ -11,23 +11,32 @@ import kotlinx.coroutines.launch
 
 class loginScreenViewModel: ViewModel() {
     val d = ""
-    private val _logInSucc = MutableLiveData<String?>(null)
-    val logInSucc: LiveData<String?> get() = _logInSucc
+    private val _userID = MutableLiveData<String?>(null)
+
+    private val _logInSucc: MutableLiveData<Boolean?> = MutableLiveData(null)
+    val logInSucc: LiveData<Boolean?> get() = _logInSucc
     private val auth = Firebase.auth
     private val _snackMsg = MutableLiveData<String>("")
     val snackMsg: LiveData<String?> get() = _snackMsg
 
+    val userID: LiveData<String?> get() = _userID
+
     // Why is this init needed?
     init {
-        _logInSucc.postValue(auth.uid)
+        _userID.postValue(auth.uid)
     }
 
     fun doLogin(email: String, pass: String){
         viewModelScope.launch(Dispatchers.IO) {
             auth.signInWithEmailAndPassword(email, pass)
-                .addOnSuccessListener { _logInSucc.postValue(it.user?.uid) }
+                .addOnSuccessListener {
+                    _userID.postValue(it.user?.uid)
+                    _snackMsg.value = "Sucessfully logged In"
+                    _logInSucc.value = true
+                }
                 .addOnFailureListener{
-                    _snackMsg.postValue(it.message)
+                    _snackMsg.postValue("Unable to Login: " + it.message)
+                    _logInSucc.value = false
                 }
         }
     }
