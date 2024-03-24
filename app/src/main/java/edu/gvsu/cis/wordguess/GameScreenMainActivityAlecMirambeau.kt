@@ -89,6 +89,10 @@ class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
         val progressCircle = findViewById<ProgressBar>(R.id.gameScreenProgressBarCircle)
         progressCircle.visibility = View.VISIBLE
 
+        // Firebase variables
+        val firebaseUID = intent.getStringExtra("userIDValue")
+        Log.d("userIDIs", "$firebaseUID")
+
 
 
 

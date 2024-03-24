@@ -55,7 +55,7 @@ class loginScreenActivity: AppCompatActivity() {
             it?.let{
                 if(it) {
                     val toGame = Intent(this, GameScreenMainActivityAlecMirambeau::class.java)
-                    toGame.putExtra("userIDValue", vm.userID.value)
+                    toGame.putExtra("userIDValue", vm.userID.value.toString())
                     startActivity(toGame)
                 }
             }

@@ -16,7 +16,7 @@ class loginScreenViewModel: ViewModel() {
     private val _logInSucc: MutableLiveData<Boolean?> = MutableLiveData(null)
     val logInSucc: LiveData<Boolean?> get() = _logInSucc
     private val auth = Firebase.auth
-    private val _snackMsg = MutableLiveData<String>("")
+    private val _snackMsg = MutableLiveData<String>(null)
     val snackMsg: LiveData<String?> get() = _snackMsg
 
     val userID: LiveData<String?> get() = _userID
