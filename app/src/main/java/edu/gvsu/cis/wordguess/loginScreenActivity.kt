@@ -15,13 +15,15 @@ class loginScreenActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_screen)
+        println("made it this far")
+
         val inputMM = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
 
         // setup widgets
         val loginBttn = findViewById<Button>(R.id.logInButton)
-        val emailTB = findViewById<TextView>(R.id.usernameTextBox)
         val passwordTB = findViewById<TextView>(R.id.passwordTextbox)
         val signUpButton = findViewById<Button>(R.id.signUpButton)
+        val emailTB = findViewById<TextView>(R.id.logInEmailTextbox)
 
 
         // setup button functionality
@@ -29,7 +31,6 @@ class loginScreenActivity: AppCompatActivity() {
             inputMM.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
             if (emailTB.text.toString().length != 0 && passwordTB.text.toString().length != 0){
                 vm.doLogin(emailTB.text.toString(), passwordTB.text.toString())
-
             }
         }
 
@@ -54,6 +55,7 @@ class loginScreenActivity: AppCompatActivity() {
         /**
          * Still need to implement the to Game button and launcher
          */
+
 
     }
 

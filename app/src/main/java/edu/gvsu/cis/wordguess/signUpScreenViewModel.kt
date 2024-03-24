@@ -1,5 +1,6 @@
 package edu.gvsu.cis.wordguess
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,24 +29,39 @@ class signUpScreenViewModel: ViewModel() {
      */
     fun createNewAccount(email:String, password: String, userName: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            fireAuth.createUserWithEmailAndPassword(email, password)
+//            fireAuth.createUserWithEmailAndPassword(email, password)
+//                .addOnSuccessListener {
+//                    Log.d("Firebase", "sucess creatino")
+//                    _userID.postValue(it.user?.uid)
+//                }
+//                .addOnFailureListener {
+//                    Log.d("Firabse", "Failure creation")
+//                    _snackMsg.postValue(it.message)
+//                }
+//        }
+//
+//    }
+            val created = fireAuth.createUserWithEmailAndPassword(email, password)
             val currentUser = fireAuth.currentUser
-                currentUser?.let {
-                    val newUser = userData(email, password, userName)
-                        firebase.collection("users")
-                            .document(it.uid)
-                            .set(newUser)
+            Log.d("Firebase", "got current user: ${currentUser}\n" +
+                    "Created new user: ${created}")
+            currentUser?.let {
+                val newUser = userData(email, password, userName)
+                firebase.collection("/users")
+                    .add(newUser)
                 .addOnSuccessListener {
+                    Log.d("Firebase", "Successfully added user")
                     _signUpSucess.value = true
                     // get and assign the User ID value provided by firebase
                     _userID.postValue(currentUser.uid)
-                    _snackMsg.postValue("Successfully signed in!")
+                    _snackMsg.postValue("Successfully signed up!")
             }
                 .addOnFailureListener {
-                    _snackMsg.postValue(it.message)
+                    Log.d("Firebase", "failed to add user")
+                    _snackMsg.postValue("unable to login ${it.message}")
                     _signUpSucess.value = false
                 }
             }
         }
     }
-}
+    }

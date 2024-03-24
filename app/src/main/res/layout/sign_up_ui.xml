@@ -8,56 +8,58 @@
 
     <EditText
         android:id="@+id/signUpUserNameTB"
-        android:layout_width="147dp"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginTop="24dp"
-        android:hint="Enter Username"
+        android:layout_marginTop="16dp"
+        android:hint="Enter Username      "
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/signUpEmailTB"
-        android:layout_width="147dp"
+        android:layout_width="wrap_content"
         android:layout_height="62dp"
-        android:layout_marginTop="44dp"
-        android:hint="Enter Email"
+        android:layout_marginTop="24dp"
+        android:hint="Enter Email            "
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signUpUserNameTB" />
 
     <EditText
         android:id="@+id/signUpPasswordEnter"
-        android:layout_width="147dp"
+        android:layout_width="wrap_content"
         android:layout_height="62dp"
         android:layout_marginTop="28dp"
-        android:hint="Enter Password"
+        android:hint="Enter Password    "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signUpEmailTB" />
 
     <EditText
         android:id="@+id/signUpPasswordConfirmation"
-        android:layout_width="147dp"
+        android:layout_width="wrap_content"
         android:layout_height="62dp"
         android:hint="Confirm Password"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signUpPasswordEnter"
-        app:layout_constraintVertical_bias="0.16" />
+        app:layout_constraintVertical_bias="0.063" />
 
     <Button
         android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="132dp"
+        android:layout_marginStart="88dp"
         android:text="Cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signUpPasswordConfirmation"
-        app:layout_constraintVertical_bias="0.019" />
+        app:layout_constraintVertical_bias="0.167" />
 
     <Button
         android:id="@+id/createButton"
@@ -71,6 +73,6 @@
         app:layout_constraintHorizontal_bias="0.207"
         app:layout_constraintStart_toEndOf="@+id/cancelButton"
         app:layout_constraintTop_toBottomOf="@+id/signUpPasswordConfirmation"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.295" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
