@@ -24,12 +24,17 @@ class settingsScreenActivity: AppCompatActivity() {
         val minWordSize = findViewById<EditText>(R.id.minimumWordSizeInput)
         val maxWordSize = findViewById<EditText>(R.id.maximumWordSizeInput)
         val backBttn = findViewById<Button>(R.id.backToGameBttn)
+        val deleteAccntBttn = findViewById<Button>(R.id.deleteAccntBttn)
 
         /** Setup default min and max word sizes that was passed in from game Activity */
         var minWordSizeValueForTB = intent.getStringExtra("minSize")
         var maxWordSizeValeuForTB = intent.getStringExtra("maxSize")
         minWordSize.setText(minWordSizeValueForTB)
         maxWordSize.setText(maxWordSizeValeuForTB)
+
+        val accountID = intent.getStringExtra("userIDValue")
+        // allow for account deletion
+
 
 
 

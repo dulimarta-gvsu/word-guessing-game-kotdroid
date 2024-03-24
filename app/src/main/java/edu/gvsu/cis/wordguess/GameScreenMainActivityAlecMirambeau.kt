@@ -91,10 +91,7 @@ class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
 
         // Firebase variables
         val firebaseUID = intent.getStringExtra("userIDValue")
-        Log.d("userIDIs", "$firebaseUID")
-
-
-
+        myViewModel.userID = firebaseUID
 
         // Set up our observers
         // if we are changing the word, we should be changing the scrambled word that's displayed
@@ -218,6 +215,7 @@ class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
             val toSettings = Intent(this, settingsScreenActivity::class.java)
             toSettings.putExtra("minSize", myViewModel.minWordLength.value.toString())
             toSettings.putExtra("maxSize", myViewModel.maxWordLength.value.toString())
+            toSettings.putExtra("userIDValue", firebaseUID)
             fromSettings.launch(toSettings)
         }
 

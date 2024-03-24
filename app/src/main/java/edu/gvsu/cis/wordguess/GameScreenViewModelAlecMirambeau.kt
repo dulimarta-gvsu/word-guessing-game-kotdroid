@@ -48,6 +48,10 @@ class GameScreenViewModel: ViewModel() {
     // API Related variables
     val apiEndpoint: WordAPI
     var listOfWord: MutableList<String> = mutableListOf()
+
+    // firebase variables
+    var userID: String? = null
+    
      init {
          apiEndpoint = wordClient.getInstance().create(WordAPI::class.java)
          genWords(10, maxWordLength.value)

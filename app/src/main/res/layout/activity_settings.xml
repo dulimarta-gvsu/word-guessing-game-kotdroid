@@ -63,6 +63,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/minimumWordSizeInput" />
 
+    <Button
+        android:id="@+id/deleteAccntBttn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:text="Delete Your Account?"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/maximumWordSizeInput"
+        app:layout_constraintVertical_bias="0.621" />
+
     <!--    <com.google.android.material.slider.Slider-->
     <!--        android:id="@+id/wordSizeSlider"-->
     <!--        android:layout_width="309dp"-->
