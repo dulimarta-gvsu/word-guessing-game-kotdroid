@@ -31,12 +31,12 @@ class loginScreenViewModel: ViewModel() {
             auth.signInWithEmailAndPassword(email, pass)
                 .addOnSuccessListener {
                     _userID.postValue(it.user?.uid)
-                    _snackMsg.value = "Sucessfully logged In"
-                    _logInSucc.value = true
+                    _snackMsg.postValue("Sucessfully logged In")
+                    _logInSucc.postValue(true)
                 }
                 .addOnFailureListener{
                     _snackMsg.postValue("Unable to Login: " + it.message)
-                    _logInSucc.value = false
+                    _logInSucc.postValue(false)
                 }
         }
     }

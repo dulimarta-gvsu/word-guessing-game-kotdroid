@@ -43,8 +43,9 @@ class signUpScreenViewModel: ViewModel() {
 //    }
             val created = fireAuth.createUserWithEmailAndPassword(email, password)
             val currentUser = fireAuth.currentUser
-            Log.d("Firebase", "got current user: ${currentUser}\n" +
-                    "Created new user: ${created}")
+            Log.d("Firebase", "got current user: ${currentUser.toString()}\n" +
+                    "Created new user: ${created.toString()}")
+            Log.d("Firebase", "is currentUser null?: ${currentUser == null}")
             currentUser?.let {
                 val newUser = userData(email, password, userName)
                 firebase.collection("/users")
@@ -54,12 +55,12 @@ class signUpScreenViewModel: ViewModel() {
                     // get and assign the User ID value provided by firebase
                     _userID.postValue(currentUser.uid)
                     _snackMsg.postValue("Successfully signed up!")
-                    _signUpSucess.value = true
+                    _signUpSucess.postValue(true)
                 }
                 .addOnFailureListener {
                     Log.d("Firebase", "failed to add user")
                     _snackMsg.postValue("unable to login ${it.message}")
-                    _signUpSucess.value = false
+                    _signUpSucess.postValue(false)
                 }
             }
         }
