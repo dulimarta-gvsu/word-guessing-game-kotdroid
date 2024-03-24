@@ -29,6 +29,8 @@ class GameScreenViewModel: ViewModel() {
     val timeSource = TimeSource.Monotonic
     var startTime: TimeSource.Monotonic.ValueTimeMark = timeSource.markNow()
     var endTime = timeSource.markNow()
+    private val _wordFetchComplete = MutableLiveData<Boolean?>(false)
+    val wordFetchComplete: LiveData<Boolean?> get() = _wordFetchComplete
 
     private val _currentWord: MutableLiveData<String> by lazy {
         MutableLiveData<String>()

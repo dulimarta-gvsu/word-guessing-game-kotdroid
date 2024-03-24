@@ -4,9 +4,11 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -14,9 +16,6 @@ import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
 
 
 class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
@@ -78,7 +77,7 @@ class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
 //        myViewModel = ViewModelProvider(this).get(GameScreenViewModel::class.java)
         // Declare our widgets
         val checkButton = findViewById<Button>(R.id.checkInput)
-        val doneButton = findViewById<Button>(R.id.doneButton)
+        val doneButton = findViewById<Button>(R.id.gameScreenLogOutButton)
         val tvCorrect = findViewById<TextView>(R.id.correctText)
         val tvIncorrect = findViewById<TextView>(R.id.incorrectText)
         val inputText = findViewById<EditText>(R.id.userInput)
@@ -86,11 +85,13 @@ class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
         val settingsBttn = findViewById<Button>(R.id.gameScreenSettingsButton)
         val statisticsButton = findViewById<Button>(R.id.gameScreenViewScoreBoard)
         myViewModel.startTime = myViewModel.timeSource.markNow()
+        val progressCircle = findViewById<ProgressBar>(R.id.gameScreenProgressBarCircle)
+        progressCircle.visibility = View.VISIBLE
+
 
 
 
         // Set up our observers
-
         // if we are changing the word, we should be changing the scrambled word that's displayed
         myViewModel.shuffledWord.observe(this, Observer {
 //            Log.d("Current Word Observer","Pre: tvScramText: ${tvScrambledWord.text}, shuffled word: ${myViewModel.shuffledWord}, actual word: ${myViewModel.currentWord.value}")
