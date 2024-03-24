@@ -29,7 +29,7 @@ class GameScreenViewModel: ViewModel() {
     val timeSource = TimeSource.Monotonic
     var startTime: TimeSource.Monotonic.ValueTimeMark = timeSource.markNow()
     var endTime = timeSource.markNow()
-    private val _wordFetchComplete = MutableLiveData<Boolean?>(false)
+    private val _wordFetchComplete = MutableLiveData<Boolean?>(null)
     val wordFetchComplete: LiveData<Boolean?> get() = _wordFetchComplete
 
     private val _currentWord: MutableLiveData<String> by lazy {
@@ -38,7 +38,7 @@ class GameScreenViewModel: ViewModel() {
     var wordsGuessed: ArrayList<GuessData> = ArrayList()
 
     var numWrongGuessCounter: MutableLiveData<Int> = MutableLiveData<Int>(0)
-    private val _shuffledWord: MutableLiveData<String> = MutableLiveData("")
+    private val _shuffledWord: MutableLiveData<String?> = MutableLiveData(null)
     var snackMssg: String = ""
     var minWordLength = MutableLiveData<Int>(3)
     var maxWordLength = MutableLiveData<Int>(6)
@@ -49,14 +49,12 @@ class GameScreenViewModel: ViewModel() {
     val apiEndpoint: WordAPI
     var listOfWord: MutableList<String> = mutableListOf()
      init {
-         println(" Picking a random word")
          apiEndpoint = wordClient.getInstance().create(WordAPI::class.java)
          genWords(10, maxWordLength.value)
-         pickRandomWord()
-         alreadyPickedRandomWord = true
+         println(" Picking a random word")
      }
     val currentWord: MutableLiveData<String> get() = _currentWord
-    val shuffledWord: MutableLiveData<String> get() = _shuffledWord
+    val shuffledWord: MutableLiveData<String?> get() = _shuffledWord
     val model: Model get() = _model
 
 
@@ -68,7 +66,7 @@ class GameScreenViewModel: ViewModel() {
                 if (it != null) {
                     Log.d("Values Returned from API: ", "$it")
                     listOfWord = it as MutableList<String>
-
+                    _wordFetchComplete.postValue(true)
                 }
             }
             }
@@ -87,18 +85,6 @@ class GameScreenViewModel: ViewModel() {
 //Updates the current word with a randomly picked word from our mutable list of words.
     fun pickRandomWord(){
         var new_word: String
-        if (!alreadyPickedRandomWord){
-            new_word = model.allWords.random()
-            println("picking new word: $new_word")
-            // Continue to call random function until we get a word that is different than our
-            // current word
-            while (new_word == currentWord.value || new_word.length !in minWordLength.value!! ..maxWordLength.value!!){
-                new_word = model.allWords.random()
-                println("picking new word: $new_word")
-            }
-
-        }
-    else{
             // Continue to call genNewWordCandidate until we get a word that is different than our
             // current word
             new_word = genNewWordCandidate()
@@ -108,20 +94,17 @@ class GameScreenViewModel: ViewModel() {
                 println("picking new word: $new_word")
             }
 
-        }
-
 
     // Assign the new word
         currentWord.value = new_word
         shuffledWord.value = shuffleWord()
-    var cmpr = shuffledWord.value == currentWord.value
-    while (cmpr){
-        shuffledWord.value = shuffleWord()
-        cmpr = shuffledWord.value == currentWord.value
-    }
+        var cmpr = shuffledWord.value == currentWord.value
+        while (cmpr){
+            shuffledWord.value = shuffleWord()
+            cmpr = shuffledWord.value == currentWord.value
+        }
 
     println("shuffled word: ${shuffledWord.value}, actual word: ${currentWord.value}")
-
 }
 
     fun shuffleWord(): String {

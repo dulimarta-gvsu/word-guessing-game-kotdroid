@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -113,7 +114,22 @@ class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
         // should update and reflect this change.
         myViewModel.model.incorrectScore.observe(this, Observer { value ->
             "Incorrect: ${value}".also { tvIncorrect.text = it }
+            Log.d("gameScreenGlitchCrash", "made it this far")
+
         })
+
+        myViewModel.wordFetchComplete.observe(this){
+            // Why does this function keep executing even though wordFetchComplete is null?
+            // It causes the program to crash
+//            progressCircle.visibility = View.GONE
+//            Log.d("wordFetchComplete", "wordFetchValue: ${myViewModel.wordFetchComplete.value}")
+//            myViewModel.pickRandomWord()
+            if (myViewModel.wordFetchComplete.value != null && myViewModel.wordFetchComplete.value == true){
+                progressCircle.visibility = View.GONE
+                Log.d("wordFetchComplete", "wordFetchValue: ${myViewModel.wordFetchComplete.value}")
+                myViewModel.pickRandomWord()
+            }
+        }
 
 //        // Anytime the user enters a wrong guess, we want to display a snackbar message
 //        myViewModel.numWrongGuessCounter.observe(this){
@@ -192,6 +208,7 @@ class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
         doneButton.setOnClickListener {
             finish()
         }
+
         /** Let's implement the settings button */
         settingsBttn.setOnClickListener {
             val toSettings = Intent(this, settingsScreenActivity::class.java)
