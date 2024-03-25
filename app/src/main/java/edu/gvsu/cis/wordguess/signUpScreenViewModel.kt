@@ -46,10 +46,13 @@ class signUpScreenViewModel: ViewModel() {
             Log.d("Firebase", "got current user: ${currentUser.toString()}\n" +
                     "Created new user: ${created.toString()}")
             Log.d("Firebase", "is currentUser null?: ${currentUser == null}")
+            Log.d("Firebase", "current userID: ${currentUser?.uid}")
             currentUser?.let {
                 val newUser = userData(email, password, userName)
                 firebase.collection("/users")
+
                     .add(newUser)
+
                 .addOnSuccessListener {
                     Log.d("Firebase", "Successfully added user")
                     // get and assign the User ID value provided by firebase
@@ -57,11 +60,15 @@ class signUpScreenViewModel: ViewModel() {
                     _snackMsg.postValue("Successfully signed up!")
                     _signUpSucess.postValue(true)
                 }
+
+
                 .addOnFailureListener {
                     Log.d("Firebase", "failed to add user")
                     _snackMsg.postValue("unable to login ${it.message}")
                     _signUpSucess.postValue(false)
                 }
+                Log.d("Firebase", "Function this far")
+                Log.d("Firebase", "SnackMsg is: $_snackMsg")
             }
         }
     }

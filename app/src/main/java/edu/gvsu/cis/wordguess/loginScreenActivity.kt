@@ -2,6 +2,7 @@ package edu.gvsu.cis.wordguess
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.TextView
@@ -47,6 +48,7 @@ class loginScreenActivity: AppCompatActivity() {
             it?.let {
                 if (it.length > 0)
                     Snackbar.make(emailTB, it, Snackbar.LENGTH_LONG).show()
+                Log.d("Firebase", it)
             }
         }
 

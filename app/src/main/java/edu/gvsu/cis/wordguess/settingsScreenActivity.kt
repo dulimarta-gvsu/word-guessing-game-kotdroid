@@ -40,8 +40,13 @@ class settingsScreenActivity: AppCompatActivity() {
         }
         deleteAccntBttn.setOnClickListener{
             vm.deleteAccnt()
-            setResult(212)
-            finish()
+        }
+
+        vm.acctDltSucc.observe(this){
+            if (vm.acctDltSucc.value != null && vm.acctDltSucc.value == true) {
+                setResult(212)
+                finish()
+            }
         }
 
 

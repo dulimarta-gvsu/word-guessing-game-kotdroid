@@ -27,7 +27,7 @@ class settingsScreenViewModel: ViewModel() {
 
     fun deleteAccnt(){
         viewModelScope.launch(Dispatchers.IO){
-            firebaseDb.document("courses/wPyO4CwjfgMYXex9oe0ioMgAVxB3")
+            firebaseDb.document("/users/$fireUserId")
                 .delete()
                 .addOnSuccessListener {
                     _snackMsg.postValue("Successfully deleted account")
