@@ -14,6 +14,8 @@ class settingsScreenViewModel: ViewModel() {
 
     var _snackMssg: String = ""
 
+    private val auth = Firebase.auth
+
     // firebase stuff
     private val _snackMsg = MutableLiveData<String>(null)
     val snackMsg: LiveData<String?> get() = _snackMsg
@@ -35,6 +37,7 @@ class settingsScreenViewModel: ViewModel() {
                     _snackMsg.postValue("Failed to delete Account ${it.message}")
                     _acctDltSucc.postValue(false)
                 }
+            auth.currentUser?.delete()
 
 
         }

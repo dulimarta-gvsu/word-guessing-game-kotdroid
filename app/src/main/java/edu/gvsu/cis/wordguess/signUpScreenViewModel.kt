@@ -37,7 +37,7 @@ class signUpScreenViewModel: ViewModel() {
             fireAuth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener {
                     Log.d("Firebase", "sucess creatino")
-                    _userID.postValue(it.user?.uid)
+                    _userID.postValue(fireAuth.currentUser?.uid)
                     _snackMsg.postValue("Successfully signed up!")
                     _signUpSucess.postValue(true)
                     firebase.document("/users/${it.user?.uid}")

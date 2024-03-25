@@ -31,7 +31,7 @@ class loginScreenViewModel: ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             auth.signInWithEmailAndPassword(email, pass)
                 .addOnSuccessListener {
-                    _userID.postValue(it.user?.uid)
+                    _userID.postValue(auth.currentUser?.uid)
                     Log.d("correctUserID", "email: ${email}, pass: ${pass}")
                     Log.d("correctUserID", "UserID is: ${_userID.value}")
 
