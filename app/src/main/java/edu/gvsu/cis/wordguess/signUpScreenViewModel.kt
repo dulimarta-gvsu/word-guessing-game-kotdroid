@@ -10,10 +10,13 @@ import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+//import com.google.firebase.firestore.FirebaseFirestore
+
 
 class signUpScreenViewModel: ViewModel() {
 
     val fireAuth = Firebase.auth
+
     val firebase = Firebase.firestore
     private val _signUpSucess = MutableLiveData<Boolean?>(null)
     val signUpSuccess: LiveData<Boolean?> get() = _signUpSucess
@@ -49,9 +52,9 @@ class signUpScreenViewModel: ViewModel() {
             Log.d("Firebase", "current userID: ${currentUser?.uid}")
             currentUser?.let {
                 val newUser = userData(email, password, userName)
-                firebase.collection("/users")
-
-                    .add(newUser)
+                firebase.document("/users/${currentUser.uid}")
+                    // use set not add, it'll create document automatically for you
+                    .set(newUser)
 
                 .addOnSuccessListener {
                     Log.d("Firebase", "Successfully added user")

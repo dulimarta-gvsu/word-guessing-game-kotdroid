@@ -31,7 +31,7 @@ class loginScreenViewModel: ViewModel() {
             auth.signInWithEmailAndPassword(email, pass)
                 .addOnSuccessListener {
                     _userID.postValue(it.user?.uid)
-                    _snackMsg.postValue("Sucessfully logged In")
+                    _snackMsg.postValue("Successfully logged In")
                     _logInSucc.postValue(true)
                 }
                 .addOnFailureListener{

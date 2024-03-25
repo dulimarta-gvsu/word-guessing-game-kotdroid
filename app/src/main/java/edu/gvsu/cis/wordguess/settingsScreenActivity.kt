@@ -38,12 +38,18 @@ class settingsScreenActivity: AppCompatActivity() {
         if(accountID != null) {
             Log.d("userIDValue", accountID)
         }
+
         deleteAccntBttn.setOnClickListener{
-            vm.deleteAccnt()
+            if (accountID != null) {
+                vm.deleteAccnt(accountID)
+            } else{
+                Log.d("UserIDValue", "AccountID is null: $accountID")
+            }
         }
 
         vm.acctDltSucc.observe(this){
             if (vm.acctDltSucc.value != null && vm.acctDltSucc.value == true) {
+                Log.d("Firebase", "Account successfully deleted, boolValue: ${vm.acctDltSucc.value}")
                 setResult(212)
                 finish()
             }
