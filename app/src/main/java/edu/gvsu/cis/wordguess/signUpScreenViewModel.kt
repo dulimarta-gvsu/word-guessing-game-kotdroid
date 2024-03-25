@@ -31,48 +31,60 @@ class signUpScreenViewModel: ViewModel() {
      * Coroutine to signUp
      */
     fun createNewAccount(email:String, password: String, userName: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-//            fireAuth.createUserWithEmailAndPassword(email, password)
-//                .addOnSuccessListener {
-//                    Log.d("Firebase", "sucess creatino")
-//                    _userID.postValue(it.user?.uid)
-//                }
-//                .addOnFailureListener {
-//                    Log.d("Firabse", "Failure creation")
-//                    _snackMsg.postValue(it.message)
-//                }
-//        }
-//
-//    }
-            val created = fireAuth.createUserWithEmailAndPassword(email, password)
-            val currentUser = fireAuth.currentUser
-            Log.d("Firebase", "got current user: ${currentUser.toString()}\n" +
-                    "Created new user: ${created.toString()}")
-            Log.d("Firebase", "is currentUser null?: ${currentUser == null}")
-            Log.d("Firebase", "current userID: ${currentUser?.uid}")
-            currentUser?.let {
-                val newUser = userData(email, password, userName)
-                firebase.document("/users/${currentUser.uid}")
-                    // use set not add, it'll create document automatically for you
-                    .set(newUser)
+        val newUser = userData(email, password, userName)
 
+        viewModelScope.launch(Dispatchers.IO) {
+            fireAuth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener {
-                    Log.d("Firebase", "Successfully added user")
-                    // get and assign the User ID value provided by firebase
-                    _userID.postValue(currentUser.uid)
+                    Log.d("Firebase", "sucess creatino")
+                    _userID.postValue(it.user?.uid)
                     _snackMsg.postValue("Successfully signed up!")
                     _signUpSucess.postValue(true)
+                    firebase.document("/users/${it.user?.uid}")
+                    // use set not add, it'll create document automatically for you
+                    .set(newUser)
+                    Log.d("Firebase", "Successfully added user")
+
                 }
-
-
                 .addOnFailureListener {
+                    Log.d("Firabse", "Failure creation")
+                    _snackMsg.postValue(it.message)
                     Log.d("Firebase", "failed to add user")
                     _snackMsg.postValue("unable to login ${it.message}")
                     _signUpSucess.postValue(false)
                 }
-                Log.d("Firebase", "Function this far")
-                Log.d("Firebase", "SnackMsg is: $_snackMsg")
-            }
         }
+
     }
+//            val created = fireAuth.createUserWithEmailAndPassword(email, password)
+//            val currentUser = fireAuth.currentUser
+//            Log.d("Firebase", "got current user: ${currentUser.toString()}\n" +
+//                    "Created new user: ${created.toString()}")
+//            Log.d("Firebase", "is currentUser null?: ${currentUser == null}")
+//            Log.d("Firebase", "current userID: ${currentUser?.uid}")
+//            currentUser?.let {
+//                val newUser = userData(email, password, userName)
+//                firebase.document("/users/${currentUser.uid}")
+//                    // use set not add, it'll create document automatically for you
+//                    .set(newUser)
+//
+//                .addOnSuccessListener {
+//                    Log.d("Firebase", "Successfully added user")
+//                    // get and assign the User ID value provided by firebase
+//                    _userID.postValue(currentUser.uid)
+//                    _snackMsg.postValue("Successfully signed up!")
+//                    _signUpSucess.postValue(true)
+//                }
+//
+//
+//                .addOnFailureListener {
+//                    Log.d("Firebase", "failed to add user")
+//                    _snackMsg.postValue("unable to login ${it.message}")
+//                    _signUpSucess.postValue(false)
+//                }
+//                Log.d("Firebase", "Function this far")
+//                Log.d("Firebase", "SnackMsg is: $_snackMsg")
+//            }
+//        }
+//    }
     }
