@@ -18,6 +18,7 @@ class settingsScreenActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+        val inputMM = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
 
 
         /** Declare widet creations */
@@ -34,7 +35,14 @@ class settingsScreenActivity: AppCompatActivity() {
 
         val accountID = intent.getStringExtra("userIDValue")
         // allow for account deletion
-
+        if(accountID != null) {
+            Log.d("userIDValue", accountID)
+        }
+        deleteAccntBttn.setOnClickListener{
+            vm.deleteAccnt()
+            setResult(212)
+            finish()
+        }
 
 
 
@@ -73,6 +81,17 @@ class settingsScreenActivity: AppCompatActivity() {
                 showSnackbarMssg()
             }
         }
+
+        /**
+         * Lets setup observers
+         */
+        vm.snackMsg.observe(this){
+            it?.let {
+                if (it.length > 0)
+                    Snackbar.make(minWordSize, it, Snackbar.LENGTH_LONG).show()
+            }
+        }
+
 
 
 

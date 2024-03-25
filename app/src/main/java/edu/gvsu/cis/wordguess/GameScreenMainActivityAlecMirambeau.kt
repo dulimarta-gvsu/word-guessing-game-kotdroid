@@ -53,6 +53,9 @@ class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
                     myViewModel.wordsGuessed = wordsListReturned
                 }
             }
+            else if (it.resultCode == 212){
+                finish()
+            }
 
         }
 
