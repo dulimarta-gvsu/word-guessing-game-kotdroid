@@ -23,6 +23,11 @@ import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 
+// Firebase imports
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.toObject
+
 
 class GameScreenViewModel: ViewModel() {
     private val _model = Model()
@@ -50,8 +55,13 @@ class GameScreenViewModel: ViewModel() {
     var listOfWord: MutableList<String> = mutableListOf()
 
     // firebase variables
+    private val firebaseDB = Firebase.firestore
     var userID: String? = null
-    
+    private val _snackMssg = MutableLiveData<String?>(null)
+    val snackMssgfb: LiveData<String?> get() = _snackMssg
+
+    private val _userUsername = MutableLiveData<String?>()
+    val userUsername: LiveData<String?> get() = _userUsername
      init {
          apiEndpoint = wordClient.getInstance().create(WordAPI::class.java)
          genWords(10, maxWordLength.value)
@@ -62,6 +72,24 @@ class GameScreenViewModel: ViewModel() {
     val model: Model get() = _model
 
 
+
+
+    fun getUserName(){
+        firebaseDB.document("/users/$userID")
+            .get()
+            .addOnSuccessListener {
+                val user: userData? = it.toObject(userData::class.java)
+                Log.d("userData", "UserID is ${user?.userName}")
+                _snackMssg.postValue("Successfully got Users data")
+                _userUsername.postValue(user?.userName)
+            }
+            .addOnFailureListener{
+                Log.d("userData", "Failed to fetch document\n" +
+                        "mssg: ${it.message}")
+                _snackMssg.postValue("Failed to get user Data ${it.message}")
+            }
+
+    }
     fun genWords(numWords: Int = 10, maxWordLength: Int?): Unit{
         if (maxWordLength != null){
         viewModelScope.launch(Dispatchers.IO) {

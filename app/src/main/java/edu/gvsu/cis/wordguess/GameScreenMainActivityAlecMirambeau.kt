@@ -78,6 +78,10 @@ class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Firebase variables
+        val firebaseUID = intent.getStringExtra("userIDValue")
+        myViewModel.userID = firebaseUID
+        myViewModel.getUserName()
 //        myViewModel = ViewModelProvider(this).get(GameScreenViewModel::class.java)
         // Declare our widgets
         val checkButton = findViewById<Button>(R.id.checkInput)
@@ -92,9 +96,8 @@ class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
         val progressCircle = findViewById<ProgressBar>(R.id.gameScreenProgressBarCircle)
         progressCircle.visibility = View.VISIBLE
 
-        // Firebase variables
-        val firebaseUID = intent.getStringExtra("userIDValue")
-        myViewModel.userID = firebaseUID
+        //firebase widget
+        val userNameTV = findViewById<TextView>(R.id.gameScreenUserNameTV)
 
         // Set up our observers
         // if we are changing the word, we should be changing the scrambled word that's displayed
@@ -133,6 +136,17 @@ class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
                 Log.d("wordFetchComplete", "wordFetchValue: ${myViewModel.wordFetchComplete.value}")
                 myViewModel.pickRandomWord()
             }
+        }
+
+        myViewModel.snackMssgfb.observe(this){
+            if (myViewModel.snackMssgfb.value != null) {
+                myViewModel.snackMssg = myViewModel.snackMssgfb.value!!
+                showSnackbarMssg()
+            }
+        }
+
+        myViewModel.userUsername.observe(this){
+            userNameTV.text = myViewModel.userUsername.value
         }
 
 //        // Anytime the user enters a wrong guess, we want to display a snackbar message

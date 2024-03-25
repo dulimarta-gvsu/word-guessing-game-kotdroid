@@ -31,6 +31,9 @@ class loginScreenActivity: AppCompatActivity() {
             inputMM.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
             if (emailTB.text.toString().length != 0 && passwordTB.text.toString().length != 0){
                 vm.doLogin(emailTB.text.toString(), passwordTB.text.toString())
+                Log.d("correctUserID", "email: ${emailTB.text.toString()}, pass: ${passwordTB.text.toString()}")
+                Log.d("correctUserID", "email: ${emailTB.text.toString()}, pass: ${passwordTB.text.toString()}")
+
             }
         }
 

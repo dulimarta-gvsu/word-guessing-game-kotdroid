@@ -1,5 +1,6 @@
 package edu.gvsu.cis.wordguess
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -31,6 +32,9 @@ class loginScreenViewModel: ViewModel() {
             auth.signInWithEmailAndPassword(email, pass)
                 .addOnSuccessListener {
                     _userID.postValue(it.user?.uid)
+                    Log.d("correctUserID", "email: ${email}, pass: ${pass}")
+                    Log.d("correctUserID", "UserID is: ${_userID.value}")
+
                     _snackMsg.postValue("Successfully logged In")
                     _logInSucc.postValue(true)
                 }
