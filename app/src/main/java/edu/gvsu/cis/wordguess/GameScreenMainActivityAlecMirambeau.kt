@@ -160,7 +160,7 @@ class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
 //
 //            } else if ( myViewModel.numWrongGuessCounter.value == 3){
 //                Snackbar.make(findViewById(R.id.gameScreenLayout), "Only 3 attempts per word allowed", Snackbar.LENGTH_SHORT ).show() //required to type 3 arguments
-//
+// //
 //            }
 //            else {
 //                Snackbar.make(
