@@ -47,7 +47,7 @@ class signUpScreenViewModel: ViewModel() {
 
                 }
                 .addOnFailureListener {
-                    Log.d("Firabse", "Failure creation")
+                    Log.d("Firebase", "Failure creation")
                     _snackMsg.postValue(it.message)
                     Log.d("Firebase", "failed to add user")
                     _snackMsg.postValue("unable to login ${it.message}")
