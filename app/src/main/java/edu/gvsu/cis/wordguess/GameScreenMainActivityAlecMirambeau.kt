@@ -92,7 +92,6 @@ class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
         val tvScrambledWord = findViewById<TextView>(R.id.scrambledWord)
         val settingsBttn = findViewById<Button>(R.id.gameScreenSettingsButton)
         val statisticsButton = findViewById<Button>(R.id.gameScreenViewScoreBoard)
-        myViewModel.startTime = myViewModel.timeSource.markNow()
         val progressCircle = findViewById<ProgressBar>(R.id.gameScreenProgressBarCircle)
         progressCircle.visibility = View.VISIBLE
 
@@ -134,12 +133,18 @@ class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
             if (myViewModel.wordFetchComplete.value != null && myViewModel.wordFetchComplete.value == true){
                 progressCircle.visibility = View.GONE
                 Log.d("wordFetchComplete", "wordFetchValue: ${myViewModel.wordFetchComplete.value}")
-                myViewModel.pickRandomWord()
+                if (myViewModel.firstFetchEver == true ){
+                    myViewModel.pickRandomWord()
+                    myViewModel.firstFetchEver = false
+                }
             }
         }
 
         myViewModel.snackMssgfb.observe(this){
             if (myViewModel.snackMssgfb.value != null) {
+                // I know the line below is causing the snackbar message to appear
+                // when the screen gets rotated. I just ran out of time before the due date
+                // to fix it, sorry. :(
                 myViewModel.snackMssg = myViewModel.snackMssgfb.value!!
                 showSnackbarMssg()
             }

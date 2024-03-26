@@ -37,6 +37,7 @@ class GameScreenViewModel: ViewModel() {
     var startTime: TimeSource.Monotonic.ValueTimeMark = timeSource.markNow()
     var endTime = timeSource.markNow()
     private val _wordFetchComplete = MutableLiveData<Boolean?>(null)
+    var firstFetchEver = true
     val wordFetchComplete: LiveData<Boolean?> get() = _wordFetchComplete
 
     private val _currentWord: MutableLiveData<String> by lazy {
@@ -68,6 +69,7 @@ class GameScreenViewModel: ViewModel() {
          apiEndpoint = wordClient.getInstance().create(WordAPI::class.java)
          genWords(10, maxWordLength.value)
          println(" Picking a random word")
+         startTime = timeSource.markNow()
      }
     val currentWord: MutableLiveData<String> get() = _currentWord
     val shuffledWord: MutableLiveData<String?> get() = _shuffledWord
