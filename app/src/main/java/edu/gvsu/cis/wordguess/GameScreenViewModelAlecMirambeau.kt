@@ -27,6 +27,8 @@ import retrofit2.http.Query
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
+import kotlin.time.Duration
+import kotlin.time.DurationUnit
 
 
 class GameScreenViewModel: ViewModel() {
@@ -90,6 +92,54 @@ class GameScreenViewModel: ViewModel() {
             }
 
     }
+
+    fun checkButtn(guess: String){
+        var guessCorrect: Boolean = checkGuess(guess)
+        // guess incorrect increment numWrongGuesses, if it's correct call method
+        // to change word. If numIncorrectGuesses >= 3, call method to change word
+
+        //if users guess is correct, increment the current score.
+        if (guessCorrect) {
+            /**
+             * once we know the boolean value within the viewmodel just have the game logic there, and same idea for if the guess is false.
+             */
+            endTime = timeSource.markNow()
+            val elapsedTime: Duration = endTime - startTime
+            var elapsedTimeSeconds = elapsedTime.toLong(DurationUnit.SECONDS)
+            sumSecondsToGuess += elapsedTimeSeconds
+            var word = GuessData(shuffledWord.value.toString(), elapsedTimeSeconds, true, currentWord.value.toString())
+            wordsGuessed.add(word)
+            model.correctScore.value = model.correctScore.value?.plus(1)
+            assignMessage("You guessed correctly, Try again!")
+            pickRandomWord()
+            endTime = timeSource.markNow()
+            startTime = timeSource.markNow()
+        }
+        // If user guesses the word incorrectly increment the currentWrongGuessesCounter
+        else {
+            numWrongGuessCounter.value =
+                numWrongGuessCounter.value?.plus(1)
+            // If user guessed wrong on this word 3 times, change to a new word.
+            if (numWrongGuessCounter.value == 3) {
+                endTime = timeSource.markNow()
+                val elapsedTime: Duration = endTime - startTime
+                val elapsedTimeSeconds = elapsedTime.toLong(DurationUnit.SECONDS)
+                sumSecondsToGuess += elapsedTimeSeconds
+                var word = GuessData(shuffledWord.value.toString(), elapsedTimeSeconds, false, currentWord.value.toString())
+                wordsGuessed.add(word)
+                model.incorrectScore.value =
+                    model.incorrectScore.value?.plus(1)
+                println("incorrect score = ${model.incorrectScore.value.toString()}")
+                assignMessage("Only 3 guesses allowed, try again!")
+                pickRandomWord()
+                numWrongGuessCounter.value = 0
+                startTime = timeSource.markNow()
+            } else {
+                assignMessage("Attempt ${numWrongGuessCounter.value} incorrect. Try again!")
+            }
+        }
+    }
+
     fun genWords(numWords: Int = 10, maxWordLength: Int?): Unit{
         if (maxWordLength != null){
         viewModelScope.launch(Dispatchers.IO) {

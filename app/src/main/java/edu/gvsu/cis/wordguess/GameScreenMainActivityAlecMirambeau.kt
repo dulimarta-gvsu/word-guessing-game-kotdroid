@@ -173,54 +173,8 @@ class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
 
         /** Let's implement the check Button function */
         checkButton.setOnClickListener {
-            var guessCorrect: Boolean = myViewModel.checkGuess(inputText.text.toString())
-            // guess incorrect increment numWrongGuesses, if it's correct call method
-            // to change word. If numIncorrectGuesses >= 3, call method to change word
-
-            //if users guess is correct, increment the current score.
-            if (guessCorrect) {
-                /**
-                 * once we know the boolean value within the viewmodel just have the game logic there, and same idea for if the guess is false.
-                 */
-                myViewModel.endTime = myViewModel.timeSource.markNow()
-                val elapsedTime: Duration = myViewModel.endTime - myViewModel.startTime
-                var elapsedTimeSeconds = elapsedTime.toLong(DurationUnit.SECONDS)
-                myViewModel.sumSecondsToGuess += elapsedTimeSeconds
-                var word = GuessData(myViewModel.shuffledWord.value.toString(), elapsedTimeSeconds, true, myViewModel.currentWord.value.toString())
-                myViewModel.wordsGuessed.add(word)
-                myViewModel.model.correctScore.value = myViewModel.model.correctScore.value?.plus(1)
-                myViewModel.assignMessage("You guessed correctly, Try again!")
-                showSnackbarMssg()
-                myViewModel.pickRandomWord()
-                myViewModel.endTime = myViewModel.timeSource.markNow()
-                myViewModel.startTime = myViewModel.timeSource.markNow()
-            }
-            // If user guesses the word incorrectly increment the currentWrongGuessesCounter
-            else {
-                myViewModel.numWrongGuessCounter.value =
-                    myViewModel.numWrongGuessCounter.value?.plus(1)
-                // If user guessed wrong on this word 3 times, change to a new word.
-                if (myViewModel.numWrongGuessCounter.value == 3) {
-                    myViewModel.endTime = myViewModel.timeSource.markNow()
-                    val elapsedTime: Duration = myViewModel.endTime - myViewModel.startTime
-                    val elapsedTimeSeconds = elapsedTime.toLong(DurationUnit.SECONDS)
-                    myViewModel.sumSecondsToGuess += elapsedTimeSeconds
-                    var word = GuessData(myViewModel.shuffledWord.value.toString(), elapsedTimeSeconds, false, myViewModel.currentWord.value.toString())
-                    myViewModel.wordsGuessed.add(word)
-                    myViewModel.model.incorrectScore.value =
-                        myViewModel.model.incorrectScore.value?.plus(1)
-                    println("incorrect score = ${myViewModel.model.incorrectScore.value.toString()}")
-                    myViewModel.assignMessage("Only 3 guesses allowed, try again!")
-                    showSnackbarMssg()
-                    myViewModel.pickRandomWord()
-                    myViewModel.numWrongGuessCounter.value = 0
-                    myViewModel.startTime = myViewModel.timeSource.markNow()
-                } else {
-                    myViewModel.assignMessage("Attempt ${myViewModel.numWrongGuessCounter.value} incorrect. Try again!")
-                    showSnackbarMssg()
-                }
-
-            }
+            myViewModel.checkButtn(inputText.text.toString())
+            showSnackbarMssg()
         }
         /** Lets implement the Done Button */
         doneButton.setOnClickListener {
