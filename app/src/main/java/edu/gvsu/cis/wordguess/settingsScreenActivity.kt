@@ -3,6 +3,7 @@ package edu.gvsu.cis.wordguess
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -11,6 +12,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
+import android.os.Handler
+
 
 class settingsScreenActivity: AppCompatActivity() {
     val vm : settingsScreenViewModel by viewModels()
@@ -41,7 +44,15 @@ class settingsScreenActivity: AppCompatActivity() {
 
         deleteAccntBttn.setOnClickListener{
             if (accountID != null) {
-                vm.deleteAccnt(accountID)
+                val deleteHandler = Handler(Looper.getMainLooper())
+                deleteHandler.postDelayed({
+                    vm.deleteAccnt(accountID)
+                }, 5000)
+                vm._snackMssg = "Your account will be delted in 5 seconds."
+                Snackbar.make(minWordSize, vm._snackMssg, 5000).setAction("Undo"){
+                    deleteHandler.removeCallbacksAndMessages(null)
+                }
+                    .show()
             } else{
                 Log.d("UserIDValue", "AccountID is null: $accountID")
             }
