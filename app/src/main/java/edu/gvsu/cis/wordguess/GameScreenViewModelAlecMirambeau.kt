@@ -166,6 +166,14 @@ class GameScreenViewModel: ViewModel() {
         listOfWord.removeAt(randomIndex)
         return randomWord
     }
+
+    fun pullPreviousData(){
+
+    }
+
+    fun pushDataBeforeLogout(){
+
+    }
 //Updates the current word with a randomly picked word from our mutable list of words.
     fun pickRandomWord(){
         var new_word: String
