@@ -41,7 +41,6 @@ class adapterClass(val wordsGuessed: List<GuessData>):
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 //        vm.num = 5
-        // What is this function doing?
         holder.itemView.isSelected = selectedPos == position
         val word = wordsGuessed.get(holder.getAdapterPosition())
         if (word.displayActualWord){
