@@ -88,13 +88,15 @@ class GameScreenViewModel: ViewModel() {
 
                     Log.d("firebasePull", "inside for loop")
                     val docObjRefer = doc.toObject(userData::class.java)
-                    if (docObjRefer.)
-                    Log.d("firebasePull", "got here")
-                    wordsGuessed = user?.guessedWords!!
-                    Log.d("userData", "UserID is ${user?.userName}")
-                    _snackMssg.postValue("Successfully got Users data")
-                    _userUsername.postValue(user?.userName)
-                    Log.d("FirebasePull", "user: $user,\nwordsGuessed: ${user?.guessedWords}")
+
+                    if (docObjRefer != null && docObjRefer.userIDFB == userID) {
+                        Log.d("firebasePull", "got here")
+                        wordsGuessed = user?.guessedWords!!
+                        Log.d("userData", "UserID is ${user?.userName}")
+                        _snackMssg.postValue("Successfully got Users data")
+                        _userUsername.postValue(user?.userName)
+                        Log.d("FirebasePull", "user: $user,\nwordsGuessed: ${user?.guessedWords}")
+                    }
                 }
             }
             .addOnFailureListener{

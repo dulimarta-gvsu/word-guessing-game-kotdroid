@@ -31,7 +31,6 @@ class signUpScreenViewModel: ViewModel() {
      * Coroutine to signUp
      */
     fun createNewAccount(email:String, password: String, userName: String) {
-        val newUser = userData(email, password, userName)
 
         viewModelScope.launch(Dispatchers.IO) {
             fireAuth.createUserWithEmailAndPassword(email, password)
@@ -40,9 +39,10 @@ class signUpScreenViewModel: ViewModel() {
                     _userID.postValue(fireAuth.currentUser?.uid)
                     _snackMsg.postValue("Successfully signed up!")
                     _signUpSucess.postValue(true)
-                    firebase.document("/users/${it.user?.uid}")
                     // use set not add, it'll create document automatically for you
-                    .set(newUser)
+                    val newUser = userData(email, password, userName, it.user?.uid!!)
+                    firebase.document("/users/${it.user?.uid}")
+                        .set(newUser)
                     Log.d("Firebase", "Successfully added user")
 
                 }
