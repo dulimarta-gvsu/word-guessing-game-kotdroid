@@ -75,17 +75,21 @@ class GameScreenViewModel: ViewModel() {
     val shuffledWord: MutableLiveData<String?> get() = _shuffledWord
     val model: Model get() = _model
 
+    private val _dataUploadedToFirebaseSuccess = MutableLiveData<Boolean>(false)
+    val dataUploadedToFirebaseSuccess: LiveData<Boolean> get() = _dataUploadedToFirebaseSuccess
+    var user: userData? = null
 
 
-
-    fun getUserName(){
+    fun getUserData(){
         firebaseDB.document("/users/$userID")
             .get()
             .addOnSuccessListener {
-                val user: userData? = it.toObject(userData::class.java)
+                user = it.toObject(userData::class.java)
+                wordsGuessed = user?.guessedWords!!
                 Log.d("userData", "UserID is ${user?.userName}")
                 _snackMssg.postValue("Successfully got Users data")
                 _userUsername.postValue(user?.userName)
+                Log.d("FirebasePull", "user: $user,\nwordsGuessed: ${user?.guessedWords}")
             }
             .addOnFailureListener{
                 Log.d("userData", "Failed to fetch document\n" +
@@ -167,11 +171,21 @@ class GameScreenViewModel: ViewModel() {
         return randomWord
     }
 
-    fun pullPreviousData(){
-
-    }
 
     fun pushDataBeforeLogout(){
+        if (user != null) {
+            user?.guessedWords = wordsGuessed
+            firebaseDB.document("/users/$userID")
+                .set(user!!)
+                .addOnSuccessListener {
+                    Log.d("firebaseUpdate", "updated user info successfully")
+                    _dataUploadedToFirebaseSuccess.postValue(true)
+                }
+                .addOnFailureListener{
+                    Log.d("firebaseUpdate", "failed to update user info ${it.message}")
+                }
+        }
+
 
     }
 //Updates the current word with a randomly picked word from our mutable list of words.

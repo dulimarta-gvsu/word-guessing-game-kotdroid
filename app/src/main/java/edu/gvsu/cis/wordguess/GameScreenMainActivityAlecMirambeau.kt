@@ -81,7 +81,7 @@ class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
         // Firebase variables
         val firebaseUID = intent.getStringExtra("userIDValue")
         myViewModel.userID = firebaseUID
-        myViewModel.getUserName()
+        myViewModel.getUserData()
 //        myViewModel = ViewModelProvider(this).get(GameScreenViewModel::class.java)
         // Declare our widgets
         val checkButton = findViewById<Button>(R.id.checkInput)
@@ -154,6 +154,15 @@ class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
             userNameTV.text = myViewModel.userUsername.value
         }
 
+        // user clicked logout, once data is uploaded, then they should be
+        // logged out
+        myViewModel.dataUploadedToFirebaseSuccess.observe(this){
+            if (myViewModel.dataUploadedToFirebaseSuccess.value == true){
+                finish()
+            }
+        }
+
+
 //        // Anytime the user enters a wrong guess, we want to display a snackbar message
 //        myViewModel.numWrongGuessCounter.observe(this){
 //            if (myViewModel.numWrongGuessCounter.value == 0){
@@ -183,8 +192,9 @@ class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
         }
         /** Lets implement the Done Button */
         doneButton.setOnClickListener {
-            finish()
+            myViewModel.pushDataBeforeLogout()
         }
+
 
         /** Let's implement the settings button */
         settingsBttn.setOnClickListener {
