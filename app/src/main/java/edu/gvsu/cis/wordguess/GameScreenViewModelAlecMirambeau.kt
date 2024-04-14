@@ -81,22 +81,25 @@ class GameScreenViewModel: ViewModel() {
 
 
     fun getUserData(){
-        firebaseDB.collection("/users")
+        firebaseDB.document("/users/$userID")
             .get()
             .addOnSuccessListener {
-                for (doc in it.documents) {
+//                for (doc in it.documents) {
 
                     Log.d("firebasePull", "inside for loop")
-                    val docObjRefer = doc.toObject(userData::class.java)
-
+                    val docObjRefer = it.toObject(userData::class.java)
+                Log.d("firebasePull", "docObjRefer null? ${docObjRefer == null}")
+                Log.d("firebasePull", " docobjrefer: ${docObjRefer}")
                     if (docObjRefer != null && docObjRefer.userIDFB == userID) {
-                        Log.d("firebasePull", "got here")
-                        wordsGuessed = user?.guessedWords!!
-                        Log.d("userData", "UserID is ${user?.userName}")
+                        Log.d("firebasePull", "is guessedWords null? ${docObjRefer.guessedWords == null}")
+                        Log.d("firebasePull", "guessedWords contains? ${docObjRefer.guessedWords}")
+                        wordsGuessed = docObjRefer.guessedWords
+                        Log.d("userData", "UserID is ${docObjRefer.userName}")
                         _snackMssg.postValue("Successfully got Users data")
-                        _userUsername.postValue(user?.userName)
-                        Log.d("FirebasePull", "user: $user,\nwordsGuessed: ${user?.guessedWords}")
-                    }
+                        _userUsername.postValue(docObjRefer.userName)
+                        user = docObjRefer
+                        Log.d("FirebasePull", "user: $user,\nwordsGuessed: ${docObjRefer.guessedWords}")
+//                    }
                 }
             }
             .addOnFailureListener{
@@ -107,6 +110,14 @@ class GameScreenViewModel: ViewModel() {
 
     }
 
+
+    fun generateSecretWord(): String{
+        var secretWord = ""
+        for (i in 1..shuffledWord.value!!.length) {
+            secretWord += "*"
+        }
+        return secretWord
+    }
     fun checkButtn(guess: String){
         var guessCorrect: Boolean = checkGuess(guess)
         // guess incorrect increment numWrongGuesses, if it's correct call method
@@ -121,7 +132,7 @@ class GameScreenViewModel: ViewModel() {
             val elapsedTime: Duration = endTime - startTime
             var elapsedTimeSeconds = elapsedTime.toLong(DurationUnit.SECONDS)
             sumSecondsToGuess += elapsedTimeSeconds
-            var word = GuessData(shuffledWord.value.toString(), elapsedTimeSeconds, true, currentWord.value.toString())
+            var word = GuessData(shuffledWord.value.toString(), elapsedTimeSeconds, true, currentWord.value.toString(), generateSecretWord(), false)
             wordsGuessed.add(word)
             model.correctScore.value = model.correctScore.value?.plus(1)
             assignMessage("You guessed correctly, Try again!")
@@ -139,7 +150,7 @@ class GameScreenViewModel: ViewModel() {
                 val elapsedTime: Duration = endTime - startTime
                 val elapsedTimeSeconds = elapsedTime.toLong(DurationUnit.SECONDS)
                 sumSecondsToGuess += elapsedTimeSeconds
-                var word = GuessData(shuffledWord.value.toString(), elapsedTimeSeconds, false, currentWord.value.toString())
+                var word = GuessData(shuffledWord.value.toString(), elapsedTimeSeconds, false, currentWord.value.toString(), generateSecretWord(), false)
                 wordsGuessed.add(word)
                 model.incorrectScore.value =
                     model.incorrectScore.value?.plus(1)
