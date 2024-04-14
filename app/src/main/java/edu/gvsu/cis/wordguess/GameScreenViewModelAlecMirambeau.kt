@@ -81,15 +81,21 @@ class GameScreenViewModel: ViewModel() {
 
 
     fun getUserData(){
-        firebaseDB.document("/users/$userID")
+        firebaseDB.collection("/users")
             .get()
             .addOnSuccessListener {
-                user = it.toObject(userData::class.java)
-                wordsGuessed = user?.guessedWords!!
-                Log.d("userData", "UserID is ${user?.userName}")
-                _snackMssg.postValue("Successfully got Users data")
-                _userUsername.postValue(user?.userName)
-                Log.d("FirebasePull", "user: $user,\nwordsGuessed: ${user?.guessedWords}")
+                for (doc in it.documents) {
+
+                    Log.d("firebasePull", "inside for loop")
+                    val docObjRefer = doc.toObject(userData::class.java)
+                    if (docObjRefer.)
+                    Log.d("firebasePull", "got here")
+                    wordsGuessed = user?.guessedWords!!
+                    Log.d("userData", "UserID is ${user?.userName}")
+                    _snackMssg.postValue("Successfully got Users data")
+                    _userUsername.postValue(user?.userName)
+                    Log.d("FirebasePull", "user: $user,\nwordsGuessed: ${user?.guessedWords}")
+                }
             }
             .addOnFailureListener{
                 Log.d("userData", "Failed to fetch document\n" +
