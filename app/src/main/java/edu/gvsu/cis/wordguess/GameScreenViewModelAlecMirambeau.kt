@@ -12,19 +12,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-// Retrofit2 imports
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Headers
-import retrofit2.http.Path
-import retrofit2.http.Query
 
 // Firebase imports
 import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
 import kotlin.time.Duration
@@ -51,7 +42,6 @@ class GameScreenViewModel: ViewModel() {
     var minWordLength = MutableLiveData<Int>(3)
     var maxWordLength = MutableLiveData<Int>(6)
     var sumSecondsToGuess: Long = 0
-    var alreadyPickedRandomWord = false
 
     // API Related variables
     val apiEndpoint: WordAPI
@@ -59,6 +49,7 @@ class GameScreenViewModel: ViewModel() {
 
     // firebase variables
     private val firebaseDB = Firebase.firestore
+    private val FBauth = Firebase.auth
     var userID: String? = null
     private val _snackMssg = MutableLiveData<String?>(null)
     val snackMssgfb: LiveData<String?> get() = _snackMssg
@@ -190,6 +181,18 @@ class GameScreenViewModel: ViewModel() {
         return randomWord
     }
 
+
+    fun doLogout(){
+        pushDataBeforeLogout()
+        doActualLogout()
+    }
+
+    fun doActualLogout(){
+        viewModelScope.launch(Dispatchers.IO) {
+            FBauth.signOut()
+            userID = null
+        }
+    }
 
     fun pushDataBeforeLogout(){
         if (user != null) {

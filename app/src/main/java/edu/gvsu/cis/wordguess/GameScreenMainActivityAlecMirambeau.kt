@@ -190,9 +190,10 @@ class GameScreenMainActivityAlecMirambeau : AppCompatActivity() {
             myViewModel.checkButtn(inputText.text.toString())
             showSnackbarMssg()
         }
+
         /** Lets implement the Done Button */
         doneButton.setOnClickListener {
-            myViewModel.pushDataBeforeLogout()
+            myViewModel.doLogout()
         }
 
 
